@@ -1,10 +1,13 @@
 {
-  "name": "use-gouache",
+  "name": "@gouache-app/use-gouache",
   "version": "0.0.0",
   "description": "Gouache.app",
   "author": "JulienRioux",
   "license": "Apache-2.0",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gouache-app/use-gouache.git"
+  },
   "main": "dist/index.js",
   "engines": {
     "node": ">=8",
@@ -61,5 +64,10 @@
   ],
   "dependencies": {
     "socket.io-client": "^4.4.1"
-  }
+  },
+  "types": "./dist/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/Gouache-app/use-gouache/issues"
+  },
+  "homepage": "https://github.com/Gouache-app/use-gouache#readme"
 }
