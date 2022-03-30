@@ -33,9 +33,9 @@ import { SOCKET_URI } from "./configs";
  *      )
  *    }
  */
-export const useGouache = (apiKey: string): { styles?: object, isLoading: boolean } => {
+export const useGouache = ({ apiKey, useDefaultStyles = false, defaultStyles = {} } : { apiKey: string, useDefaultStyles?: boolean, defaultStyles?: object }): { styles?: object, isLoading: boolean } => {
   const ref: any = useRef();
-  const [stylesObject, setStylesObject] = useState()
+  const [stylesObject, setStylesObject] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -48,20 +48,19 @@ export const useGouache = (apiKey: string): { styles?: object, isLoading: boolea
     socket.on("connect", () => {
       // Join the room when connecting.
       socket.emit(SOCKET_EVENTS.JOIN_ROOM, {apiKey}, () => {
-        setIsLoading(false);
       });
     });
 
     socket.on("reconnect", () => {
       // Join the room when re-connecting.
       socket.emit(SOCKET_EVENTS.JOIN_ROOM, {apiKey}, () => {
-        setIsLoading(false);
       });
     });
 
     // Listening to styles object updates
     socket.on(SOCKET_EVENTS.UPDATE_STYLES_OBJECT, (stylesObjectResponse: any) => {
-      setStylesObject(stylesObjectResponse)
+      setStylesObject(stylesObjectResponse);
+      setIsLoading(false);
     });
     ref.current = socket;
   }, []);

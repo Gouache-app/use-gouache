@@ -75,7 +75,7 @@ TODO: Video
 
 ## Documentation
 
-For more information about the Gouache, visit https://gouache-doc.netlify.app/ and to use the platform, visit https://gouache.app/.
+For more information about the Gouache, visit https://docs.gouache.app/ and to use the platform, visit https://gouache.app/.
 
 
 ## Contributing
