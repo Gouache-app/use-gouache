@@ -46,4 +46,6 @@ workflows:
     jobs:
       - say-hello
       - install
-      - lint
+      - lint: 
+        requires:
+          - install
