@@ -22,7 +22,6 @@ jobs:
   # Install and cache node_modules
   # -----------------------------------------------------------------------
   install:
-    executor: nodejs
     steps:
       - checkout
       - run:
