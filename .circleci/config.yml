@@ -30,6 +30,15 @@ jobs:
           name: Yarn install
           command: yarn install --frozen-lockfile --ignore-optional
 
+  lint:
+    docker:
+      - image: cimg/node:14.17.3
+    steps:
+      - checkout
+      - run:
+          name: Lint
+          command: yarn lint
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
@@ -37,3 +46,4 @@ workflows:
     jobs:
       - say-hello
       - install
+      - lint

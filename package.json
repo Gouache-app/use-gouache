@@ -16,7 +16,8 @@
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "lint": "yarn eslint ./src --ext ts,tsx,js,jsx"
   },
   "jest": {
     "transform": {
