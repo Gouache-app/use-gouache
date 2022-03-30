@@ -5,7 +5,7 @@ version: 2.1
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  usg-gouache-workflow:
+  pull-request:
     jobs:
       - install
       - lint:
@@ -14,40 +14,54 @@ workflows:
       - build:
           requires:
             - install
+      - unit-test:
+          requires:
+            - install
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  pull-request:
-    install:
-      docker:
-        - image: cimg/node:14.17.3
-      steps:
-        - checkout
-        - run:
-            name: Yarn install
-            command: yarn install --frozen-lockfile --ignore-optional
-        - save_yarn_cache
+  install:
+    docker:
+      - image: cimg/node:14.17.3
+    steps:
+      - checkout
+      - run:
+          name: Yarn install
+          command: yarn install --frozen-lockfile --ignore-optional
+      - save_yarn_cache
 
-    lint:
-      docker:
-        - image: cimg/node:14.17.3
-      steps:
-        - checkout
-        - restore_yarn_cache
-        - run:
-            name: Lint
-            command: yarn lint
+  lint:
+    docker:
+      - image: cimg/node:14.17.3
+    steps:
+      - checkout
+      - restore_yarn_cache
+      - run:
+          name: Lint
+          command: yarn lint
 
-    build:
-      docker:
-        - image: cimg/node:14.17.3
-      steps:
-        - checkout
-        - restore_yarn_cache
-        - run:
-            name: Build
-            command: yarn build
+  build:
+    docker:
+      - image: cimg/node:14.17.3
+    steps:
+      - checkout
+      - restore_yarn_cache
+      - run:
+          name: Build
+          command: yarn build
+
+  unit-test:
+    docker:
+      - image: cimg/node:14.17.3
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run: ci-skip-if-unchanged -p src
+      - restore_yarn_cache
+      - run:
+          name: Unit test
+          command: yarn test
 
 # Reusable Commands
 commands:
