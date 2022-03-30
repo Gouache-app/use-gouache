@@ -18,35 +18,36 @@ workflows:
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  install:
-    docker:
-      - image: cimg/node:14.17.3
-    steps:
-      - checkout
-      - run:
-          name: Yarn install
-          command: yarn install --frozen-lockfile --ignore-optional
-      - save_yarn_cache
+  pull-request:
+    install:
+      docker:
+        - image: cimg/node:14.17.3
+      steps:
+        - checkout
+        - run:
+            name: Yarn install
+            command: yarn install --frozen-lockfile --ignore-optional
+        - save_yarn_cache
 
-  lint:
-    docker:
-      - image: cimg/node:14.17.3
-    steps:
-      - checkout
-      - restore_yarn_cache
-      - run:
-          name: Lint
-          command: yarn lint
+    lint:
+      docker:
+        - image: cimg/node:14.17.3
+      steps:
+        - checkout
+        - restore_yarn_cache
+        - run:
+            name: Lint
+            command: yarn lint
 
-  build:
-    docker:
-      - image: cimg/node:14.17.3
-    steps:
-      - checkout
-      - restore_yarn_cache
-      - run:
-          name: Build
-          command: yarn build
+    build:
+      docker:
+        - image: cimg/node:14.17.3
+      steps:
+        - checkout
+        - restore_yarn_cache
+        - run:
+            name: Build
+            command: yarn build
 
 # Reusable Commands
 commands:
