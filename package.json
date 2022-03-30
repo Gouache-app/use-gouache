@@ -1,6 +1,6 @@
 {
   "name": "@gouache-app/use-gouache",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Gouache.app",
   "author": "JulienRioux",
   "license": "Apache-2.0",
@@ -16,7 +16,7 @@
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w",
-    "test": "jest --watch",
+    "test": "jest --watchAll",
     "lint": "yarn eslint ./src --ext ts,tsx,js,jsx"
   },
   "jest": {
