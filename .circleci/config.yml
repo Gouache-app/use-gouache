@@ -54,10 +54,8 @@ jobs:
   unit-test:
     docker:
       - image: cimg/node:14.17.3
-    resource_class: xlarge
     steps:
       - checkout
-      - run: ci-skip-if-unchanged -p src
       - restore_yarn_cache
       - run:
           name: Unit test
