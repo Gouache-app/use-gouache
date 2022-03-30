@@ -50,7 +50,7 @@ jobs:
       - restore_yarn_cache
       - run:
           name: Lint
-          command: yarn install && yarn lint
+          command: yarn lint
 
 # -----------------------------------------------------------------------
 # Reusable Commands
