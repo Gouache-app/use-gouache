@@ -22,12 +22,13 @@ jobs:
   # Install and cache node_modules
   # -----------------------------------------------------------------------
   install:
+    docker:
+      - image: cimg/base:stable
     steps:
       - checkout
       - run:
           name: Yarn install
-          command: |
-            yarn install --frozen-lockfile --ignore-optional
+          command: yarn install --frozen-lockfile --ignore-optional
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
