@@ -1,6 +1,6 @@
 # @gouache-app/use-gouache
 
-[![Gouache](https://circleci.com/gh/Gouache-app/use-gouache.svg?style=svg?style=shield)]
+![Gouache](https://circleci.com/gh/Gouache-app/use-gouache.svg?style=shield)
 
 [![npm version](https://badge.fury.io/js/@gouache-app%2Fuse-gouache.svg)](https://badge.fury.io/js/@gouache-app%2Fuse-gouache)
 
