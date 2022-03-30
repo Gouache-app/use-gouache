@@ -2,6 +2,17 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+workflows:
+  say-hello-workflow:
+    jobs:
+      - say-hello
+      - install
+      - lint:
+          requires:
+            - install
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -29,23 +40,34 @@ jobs:
       - run:
           name: Yarn install
           command: yarn install --frozen-lockfile --ignore-optional
+      - save_yarn_cache
 
   lint:
     docker:
       - image: cimg/node:14.17.3
     steps:
       - checkout
+      - restore_yarn_cache
       - run:
           name: Lint
           command: yarn install && yarn lint
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
-workflows:
-  say-hello-workflow:
-    jobs:
-      - say-hello
-      - install
-      - lint:
-          requires:
-            - install
+# -----------------------------------------------------------------------
+# Reusable Commands
+# -----------------------------------------------------------------------
+
+commands:
+  save_yarn_cache:
+    steps:
+      - save_cache:
+          name: Save node_modules
+          key: yarn-cache-v1-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
+  restore_yarn_cache:
+    steps:
+      - restore_cache:
+          keys:
+            - yarn-cache-v1-{{ checksum "yarn.lock" }}
+            - yarn-cache-v1-
