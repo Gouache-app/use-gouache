@@ -29,9 +29,6 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
 
-  # -----------------------------------------------------------------------
-  # Install and cache node_modules
-  # -----------------------------------------------------------------------
   install:
     docker:
       - image: cimg/node:14.17.3
@@ -52,10 +49,17 @@ jobs:
           name: Lint
           command: yarn lint
 
-# -----------------------------------------------------------------------
-# Reusable Commands
-# -----------------------------------------------------------------------
+  build:
+    docker:
+      - image: cimg/node:14.17.3
+    steps:
+      - checkout
+      - restore_yarn_cache
+      - run:
+          name: Build
+          command: yarn build
 
+# Reusable Commands
 commands:
   save_yarn_cache:
     steps:
