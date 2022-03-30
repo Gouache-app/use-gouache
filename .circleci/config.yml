@@ -59,7 +59,7 @@ jobs:
       - restore_yarn_cache
       - run:
           name: Unit test
-          command: yarn test
+          command: yarn run jest
 
 # Reusable Commands
 commands:
