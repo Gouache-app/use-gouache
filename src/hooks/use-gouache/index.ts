@@ -1,14 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 
 import { SOCKET_URI } from './configs';
 import { SOCKET_EVENTS } from './events';
 
 /**
- * useGouache hook to help you setup your app using Gouache.
+ * The `useGouache` hook let you automatically update your styles when changing it on the Gouache app.
  *
- * @param    {string} apiKey
+ * @arg      {Object.<string, any>} settings
+ *
+ * @arg      {string} settings.apiKey
  *           Api Key of your Gouache project.
+ *
+ * @arg      {boolean} settings.useDefaultStyles
+ *           Whether to use the default styles or fetching the styles from Gouache.
+ *
+ * @arg      {Object} settings.defaultStyles
+ *           Default Styles object
  *
  * @return   {Object}
  *           Object with the styles object and the loading state.
@@ -20,53 +28,56 @@ import { SOCKET_EVENTS } from './events';
  *           Whether the hook retrieved the data or if it still getting it.
  *
  * @example
- *   const MyApp = () => {
- *     const { styles, isLoading } = useGouache("MY_GOUACHE_API_KEY");
- *
- *     if(isLoading){
- *        return <p>Loading...</p>;
- *     }
- *
- *     return (
- *       <>
- *         <p>{JSON.stringify(styles)}</p>
- *       </>
- *      )
- *    }
+ * const App = () => {
+ *   const { styles, isLoading } = useGouache({ apiKey: 'MY_GOUACHE_API_KEY' });
+
+ *   if (isLoading) {
+ *     return <p>Loading...</p>;
+ *   }
+ * 
+ *   // Pretty print the JSON object
+ *   return (
+ *     <>
+ *       <p>
+ *         <pre>{JSON.stringify(styles, null, 2)}</pre>
+ *       </p>
+ *     </>
+ *   );
+ * };
  */
 export const useGouache = ({
   apiKey,
   useDefaultStyles = false,
-  defaultStyles = {},
+  defaultStyles,
 }: {
   apiKey: string;
   useDefaultStyles?: boolean;
   defaultStyles?: object;
 }): { styles?: object; isLoading: boolean } => {
-  const ref: any = useRef();
-  const [stylesObject, setStylesObject] = useState<object>(defaultStyles);
+  const ref = useRef<Socket>();
+  const [stylesObject, setStylesObject] = useState<object | undefined>(defaultStyles);
   // If we're using the default styles, there is no loading state.
   const [isLoading, setIsLoading] = useState(!useDefaultStyles);
 
   useEffect(() => {
+    // Don't connect to the server if we're using the default style
+    if (useDefaultStyles) {
+      return;
+    }
     const socket = io(SOCKET_URI);
-
-    socket.on('disconnect', () => {
-      console.log('disconnected');
-    });
 
     socket.on('connect', () => {
       // Join the room when connecting.
-      socket.emit(SOCKET_EVENTS.JOIN_ROOM, { apiKey }, () => {
-        // Do something here?
-      });
+      socket.emit(SOCKET_EVENTS.JOIN_ROOM, { apiKey });
+    });
+
+    socket.on('disconnect', () => {
+      console.log('Gouache disconnected.');
     });
 
     socket.on('reconnect', () => {
       // Join the room when re-connecting.
-      socket.emit(SOCKET_EVENTS.JOIN_ROOM, { apiKey }, () => {
-        // Do something here?
-      });
+      socket.emit(SOCKET_EVENTS.JOIN_ROOM, { apiKey });
     });
 
     // Listening to styles object updates
