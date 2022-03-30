@@ -1,5 +1,7 @@
 # @gouache-app/use-gouache
 
+[![Gouache](https://circleci.com/gh/Gouache-app/use-gouache.svg?style=svg?style=shield)]
+
 [![npm version](https://badge.fury.io/js/@gouache-app%2Fuse-gouache.svg)](https://badge.fury.io/js/@gouache-app%2Fuse-gouache)
 
 ## Table of Contents
@@ -84,7 +86,7 @@ We encourage pull requests and other contributions from the community.
 
 <details>
   <summary>Development tips</summary>
-  
+
   ## Testing
 
   to run tests, simply run `yarn test`.
