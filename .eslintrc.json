@@ -3,9 +3,8 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-
     "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
+    "prettier"
   ],
   "plugins": [
     "react",
@@ -27,17 +26,11 @@
   },
   "rules": {
     "react-hooks/rules-of-hooks": "error",
-    "simple-import-sort/sort": "error",
+    "simple-import-sort/imports": "error",
     "prettier/prettier": ["error"],
     "linebreak-style": 0,
     "camelcase": "off",
     "endOfLine": 0,
-    "@typescript-eslint/camelcase": [
-      "error",
-      {
-        "ignoreDestructuring": true
-      }
-    ],
     "no-unused-vars": 0,
     "@typescript-eslint/explicit-function-return-type": 0
   }

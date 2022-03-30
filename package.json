@@ -16,7 +16,7 @@
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w",
-    "test": "jest"
+    "test": "jest --watch"
   },
   "jest": {
     "transform": {
@@ -41,11 +41,19 @@
     "@types/jest": "^26.0.7",
     "@types/react": "^16.3.13",
     "@types/react-dom": "^16.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
+    "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "jest": "^26.1.0",
-    "react-test-renderer": "^16.13.1",
+    "prettier": "^2.6.1",
+    "react-test-renderer": "^18.0.0",
     "rollup": "^1.29.0",
     "rollup-plugin-sass": "^1.2.2",
     "rollup-plugin-typescript2": "^0.25.3",
@@ -63,6 +71,8 @@
     "npm"
   ],
   "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "socket.io-client": "^4.4.1"
   },
   "types": "./dist/index.d.ts",

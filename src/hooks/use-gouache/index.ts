@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
-import { io } from "socket.io-client";
-import { SOCKET_EVENTS } from "./events";
-import { SOCKET_URI } from "./configs";
+import { useEffect, useRef, useState } from 'react';
+import { io } from 'socket.io-client';
+
+import { SOCKET_URI } from './configs';
+import { SOCKET_EVENTS } from './events';
 
 /**
  * useGouache hook to help you setup your app using Gouache.
@@ -21,7 +22,7 @@ import { SOCKET_URI } from "./configs";
  * @example
  *   const MyApp = () => {
  *     const { styles, isLoading } = useGouache("MY_GOUACHE_API_KEY");
- * 
+ *
  *     if(isLoading){
  *        return <p>Loading...</p>;
  *     }
@@ -33,32 +34,43 @@ import { SOCKET_URI } from "./configs";
  *      )
  *    }
  */
-export const useGouache = ({ apiKey, useDefaultStyles = false, defaultStyles = {} } : { apiKey: string, useDefaultStyles?: boolean, defaultStyles?: object }): { styles?: object, isLoading: boolean } => {
+export const useGouache = ({
+  apiKey,
+  useDefaultStyles = false,
+  defaultStyles = {},
+}: {
+  apiKey: string;
+  useDefaultStyles?: boolean;
+  defaultStyles?: object;
+}): { styles?: object; isLoading: boolean } => {
   const ref: any = useRef();
-  const [stylesObject, setStylesObject] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  const [stylesObject, setStylesObject] = useState<object>(defaultStyles);
+  // If we're using the default styles, there is no loading state.
+  const [isLoading, setIsLoading] = useState(!useDefaultStyles);
 
   useEffect(() => {
     const socket = io(SOCKET_URI);
 
-    socket.on("disconnect", () => {
-      console.log("disconnected");
+    socket.on('disconnect', () => {
+      console.log('disconnected');
     });
 
-    socket.on("connect", () => {
+    socket.on('connect', () => {
       // Join the room when connecting.
-      socket.emit(SOCKET_EVENTS.JOIN_ROOM, {apiKey}, () => {
+      socket.emit(SOCKET_EVENTS.JOIN_ROOM, { apiKey }, () => {
+        // Do something here?
       });
     });
 
-    socket.on("reconnect", () => {
+    socket.on('reconnect', () => {
       // Join the room when re-connecting.
-      socket.emit(SOCKET_EVENTS.JOIN_ROOM, {apiKey}, () => {
+      socket.emit(SOCKET_EVENTS.JOIN_ROOM, { apiKey }, () => {
+        // Do something here?
       });
     });
 
     // Listening to styles object updates
-    socket.on(SOCKET_EVENTS.UPDATE_STYLES_OBJECT, (stylesObjectResponse: any) => {
+    socket.on(SOCKET_EVENTS.UPDATE_STYLES_OBJECT, (stylesObjectResponse: object) => {
       setStylesObject(stylesObjectResponse);
       setIsLoading(false);
     });
@@ -66,4 +78,4 @@ export const useGouache = ({ apiKey, useDefaultStyles = false, defaultStyles = {
   }, []);
 
   return { styles: stylesObject, isLoading };
-}
+};
