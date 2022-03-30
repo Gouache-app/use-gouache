@@ -3,6 +3,7 @@ import { io, Socket } from 'socket.io-client';
 
 import { SOCKET_URI } from './configs';
 import { SOCKET_EVENTS } from './events';
+import { getApiKeyFromUrlParams } from './get-api-key-from-url-params';
 
 /**
  * The `useGouache` hook let you automatically update your styles when changing it on the Gouache app.
@@ -59,16 +60,24 @@ export const useGouache = ({
   // If we're using the default styles, there is no loading state.
   const [isLoading, setIsLoading] = useState(!useDefaultStyles);
 
+  // Override the Styles object and get live update using URL params
+  const apiKeyFromParams = getApiKeyFromUrlParams();
+
+  // If there is an API key in the params, use this one. Otherwise, use the current one.
+  const currentApiKey = apiKeyFromParams ?? apiKey;
+
   useEffect(() => {
     // Don't connect to the server if we're using the default style
-    if (useDefaultStyles) {
+    // Unless there is an API key we're getting from the params
+    if (useDefaultStyles && !apiKeyFromParams) {
       return;
     }
+
     const socket = io(SOCKET_URI);
 
     socket.on('connect', () => {
       // Join the room when connecting.
-      socket.emit(SOCKET_EVENTS.JOIN_ROOM, { apiKey });
+      socket.emit(SOCKET_EVENTS.JOIN_ROOM, { apiKey: currentApiKey });
     });
 
     socket.on('disconnect', () => {
@@ -77,7 +86,7 @@ export const useGouache = ({
 
     socket.on('reconnect', () => {
       // Join the room when re-connecting.
-      socket.emit(SOCKET_EVENTS.JOIN_ROOM, { apiKey });
+      socket.emit(SOCKET_EVENTS.JOIN_ROOM, { apiKey: currentApiKey });
     });
 
     // Listening to styles object updates
