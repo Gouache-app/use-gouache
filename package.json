@@ -1,6 +1,6 @@
 {
   "name": "@gouache-app/use-gouache",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Gouache.app",
   "author": "JulienRioux",
   "license": "Apache-2.0",
@@ -16,7 +16,7 @@
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w",
-    "test": "jest --watch",
+    "test": "jest --watchAll",
     "lint": "yarn eslint ./src --ext ts,tsx,js,jsx"
   },
   "jest": {
@@ -54,6 +54,8 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "jest": "^26.1.0",
     "prettier": "^2.6.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "react-test-renderer": "^18.0.0",
     "rollup": "^1.29.0",
     "rollup-plugin-sass": "^1.2.2",
@@ -72,8 +74,6 @@
     "npm"
   ],
   "dependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
     "socket.io-client": "^4.4.1"
   },
   "types": "./dist/index.d.ts",
