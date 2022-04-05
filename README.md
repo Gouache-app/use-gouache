@@ -2,17 +2,25 @@
 
 [![npm version](https://badge.fury.io/js/@gouache-app%2Fuse-gouache.svg)](https://badge.fury.io/js/@gouache-app%2Fuse-gouache) ![Gouache](https://circleci.com/gh/Gouache-app/use-gouache.svg?style=shield)
 
+<p align="center">
+  <img style="width: 200px; margin: 0 auto;" src="https://cdn.sanity.io/images/fc5brcyr/production/ea382e95cec9a0a0b7193f7d96694ab66a7f1d3c-512x512.png" />
+</p>
+
 ## Table of Contents
 
-- [@gouache-app/use-gouache](#gouache-appuse-gouache)
-  - [Table of Contents](#table-of-contents)
-  - [Intro](#intro)
-  - [Features](#features)
-  - [Install](#install)
-    - [With Yarn](#with-yarn)
-    - [With NPM](#with-npm)
-  - [Usage](#usage)
-
+- [Intro](#intro)
+- [Features](#features)
+- [Tutorials](#tutorials)
+- [Install](#install)
+  - [With Yarn](#with-yarn)
+  - [With NPM](#with-npm)
+- [Usage](#usage)
+  - [Basics](#basics)
+  - [How to get your project's API key?](#how-to-get-your-projects-api-key)
+  - [Default style object / production mode](#default-style-object--production-mode)
+  - [URL params override](#url-paramsoverride)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
 ## Intro
 
 Welcome to the `useGouache` hook. This hook is needed in order to use the [Gouache app](https://gouache.app/). Gouache is a Design Data Platform created to help your team collaborate, prototyping & uniformise your apps from design to prod.
@@ -23,6 +31,13 @@ Welcome to the `useGouache` hook. This hook is needed in order to use the [Gouac
 - Loading state
 - Production mode
 - Styles override using search params
+
+## Tutorials
+
+- [Let's introduce Gouache](https://blog.gouache.app/)
+- [Gouache | Advanced features](https://blog.gouache.app/)
+- [Theming with Gouache and styled-components 💅🏾](https://blog.gouache.app/)
+
 
 ## Install
 
@@ -63,10 +78,8 @@ const App = () => {
 ```
 
 ### How to get your project's API key?
-
-You need to go to the root of your project and click on the more button on the left of your project title. Then click on Settings to see your API key. To copy it to use it with the `useGouache`, you only need to click on it.
-
-[![How to get your project's API key](https://img.youtube.com/vi/P3vTEEcLIPk/0.jpg)](https://www.youtube.com/watch?v=P3vTEEcLIPk)
+ 
+Take a look at our docs: https://docs.gouache.app/docs/faq/api-key
 
 ### Default style object / production mode
 
@@ -99,12 +112,6 @@ const App = () => {
 When you're using Gouache in production, like said earlier, you should use the defaultStyles object. That said, it did not mean that you cannot use the Gouache platform to test things out. To override the default styles, you can add the following search params to your app URL `?gouache-api-key=MY_GOUACHE_API_KEY`. (replacing `MY_GOUACHE_API_KEY` with your project's API key). This will only change the styles in your browser and not on any other user.
 
 ex: https://example.com?gouache-api-key=MY_GOUACHE_API_KEY
-
-### Connect with `styled-components` theme provider:
-
-...
-
-if you already have a theme, you can add it like this:
 
 
 ## Documentation
