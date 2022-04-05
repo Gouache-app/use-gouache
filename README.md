@@ -20,8 +20,9 @@ Welcome to the `useGouache` hook. This hook is needed in order to use the [Gouac
 ## Features
 
 - Hot reload (Live updates)
-- Easy to use
 - Loading state
+- Production mode
+- Styles override using search params
 
 ## Install
 
@@ -41,15 +42,15 @@ npm i @gouache-app/use-gouache --save
 
 ## Usage
 
-### Get your styles object:
+### Basics
 
 ```jsx
-import { useGouache } from "@gouache-app/use-gouache";
+import { useGouache } from '@gouache-app/use-gouache';
 
-const MyApp = () => {
-  const { styles, isLoading } = useGouache("MY_GOUACHE_API_KEY");
+const App = () => {
+  const { styles, isLoading } = useGouache({ apiKey: 'MY_GOUACHE_API_KEY' });
 
-  if(isLoading){
+  if (isLoading) {
     return <p>Loading...</p>;
   }
 
@@ -57,20 +58,53 @@ const MyApp = () => {
     <>
       <p>{JSON.stringify(styles)}</p>
     </>
-  )
-}
+  );
+};
 ```
+
+### How to get your project's API key?
+
+You need to go to the root of your project and click on the more button on the left of your project title. Then click on Settings to see your API key. To copy it to use it with the `useGouache`, you only need to click on it.
+
+[![How to get your project's API key](https://img.youtube.com/vi/P3vTEEcLIPk/0.jpg)](https://www.youtube.com/watch?v=P3vTEEcLIPk)
+
+### Default style object / production mode
+
+We recommend using the use-gouache hook in production using the defaultStyles object in order to prevent fetching the styles object in production. To do so, you need to download the Styles object and use the `defaultStyles` and the `useDefaultStyles` params.
+
+```jsx
+import defaultStyles from './path_to_downloaded_json_file.json';
+
+const App = () => {
+  const { styles, isLoading } = useGouache({
+    apiKey: 'MY_API_KEY',
+    useDefaultStyles: true,
+    defaultStyles,
+  });
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <>
+      <p>{JSON.stringify(styles)}</p>
+    </>
+  );
+};
+```
+
+### URL params override
+
+When you're using Gouache in production, like said earlier, you should use the defaultStyles object. That said, it did not mean that you cannot use the Gouache platform to test things out. To override the default styles, you can add the following search params to your app URL `?gouache-api-key=MY_GOUACHE_API_KEY`. (replacing `MY_GOUACHE_API_KEY` with your project's API key). This will only change the styles in your browser and not on any other user.
+
+ex: https://example.com?gouache-api-key=MY_GOUACHE_API_KEY
 
 ### Connect with `styled-components` theme provider:
 
 ...
 
 if you already have a theme, you can add it like this:
-
-
-
-### Get your project's API key
-TODO: Video
 
 
 ## Documentation
