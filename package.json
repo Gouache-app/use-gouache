@@ -1,7 +1,7 @@
 {
   "name": "@gouache-app/use-gouache",
-  "version": "0.0.4",
-  "description": "Gouache.app",
+  "version": "0.0.6",
+  "description": "gouache.app",
   "author": "JulienRioux",
   "license": "Apache-2.0",
   "repository": {
